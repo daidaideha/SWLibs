@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StopwatchView">
+        <attr name="lineLongLength" format="dimension" />
+        <attr name="lineMiddleLength" format="dimension" />
+        <attr name="lineShortLength" format="dimension" />
+        <attr name="lineNumberWidth" format="dimension" />
+        <attr name="lineNormalWidth" format="dimension" />
+        <attr name="secondColor" format="color" />
+        <attr name="millisecondColor" format="color" />
+        <attr name="dialTextColor" format="color" />
+        <attr name="dialTextSize" format="dimension" />
+        <attr name="timerTextColor" format="color" />
+        <attr name="timerTextSize" format="dimension" />
+        <attr name="pointEndWidth" format="dimension" />
+        <attr name="pointEndLength" format="dimension" />
+        <attr name="pointRadius" format="dimension" />
+    </declare-styleable>
+
+    <!-- 圆环进度条-->
+    <declare-styleable name="RunnerProgress">
+        <!-- 外层圆的颜色-->
+        <attr name="roundColor" format="color" />
+        <!-- 弧形进度的颜色-->
+        <attr name="roundProgressColor" format="color" />
+        <!-- 圆环的宽度-->
+        <attr name="roundWidth" format="dimension" />
+        <!-- 中间百分比文字的颜色-->
+        <attr name="textColor" format="color" />
+        <!-- 中间百分比文字的大小-->
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="UpDownTextSwitcher">
+        <attr name="noticeTextSize" format="dimension" />
+        <attr name="noticeTextColor" format="color" />
+        <attr name="speed" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="loadingColor" format="color" />
+        <attr name="pathWidth" format="dimension" />
+    </declare-styleable>
+
+</resources>

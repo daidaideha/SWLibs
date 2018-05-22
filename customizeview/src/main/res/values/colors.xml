@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="run_progress_bar">#3FE9FC</color>
+    <color name="run_progress_text">#FFE9A1</color>
+
+    <color name="stopwatch_second_color">#000000</color>
+    <color name="stopwatch_millisecond_color">#797878</color>
+    <color name="stopwatch_text_color">#000000</color>
+    <color name="stopwatch_point_start_color">#f5bd5b</color>
+    <color name="stopwatch_point_end_color">#f99e00</color>
+
+    <color name="up_down_switcher_text_color">#707070</color>
+
+    <color name="loading_path_progress_color">#8e8e8e</color>
+    <color name="loading_path_background">#a3030303</color>
+</resources>
