@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <com.zjwh.sw.customize.view.StopwatchView
+    <com.zjwh.sw.customize.view.stopwatch.StopwatchView
         android:id="@+id/stopwatchView"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         app:dialTextSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,5 +21,55 @@
         app:pointEndLength="20dp"
         app:pointRadius="9dp"
         app:timerTextSize="13sp" />
+
+    <com.zjwh.sw.customize.view.RunOperateButton
+        android:id="@+id/btnPause"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toBottomOf="@+id/stopwatchView"
+        app:operateBackgroundColor="@color/colorPrimary"
+        app:operateEmptyColor="@color/colorPrimary"
+        app:operateMiddleStyle="pause"
+        app:operateStrokeColor="@color/white"
+        app:operateStyle="none" />
+
+    <com.zjwh.sw.customize.view.RunOperateButton
+        android:id="@+id/btnStart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintLeft_toRightOf="@+id/btnPause"
+        app:layout_constraintTop_toBottomOf="@+id/stopwatchView"
+        app:operateBackgroundColor="@color/colorPrimary"
+        app:operateEmptyColor="@color/colorPrimary"
+        app:operateMiddleStyle="start"
+        app:operateStrokeColor="@color/white"
+        app:operateStyle="none" />
+
+    <com.zjwh.sw.customize.view.RunOperateButton
+        android:id="@+id/btnProgress"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toBottomOf="@+id/btnPause"
+        app:operateBackgroundColor="@color/colorPrimary"
+        app:operateEmptyColor="@color/white"
+        app:operateMaxProgress="100"
+        app:operateStrokeColor="@color/white"
+        app:operateStyle="progress" />
+
+    <com.zjwh.sw.customize.view.RunOperateButton
+        android:id="@+id/btnProgressStroke"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintLeft_toRightOf="@+id/btnProgress"
+        app:layout_constraintTop_toBottomOf="@+id/btnStart"
+        app:operateBackgroundColor="@color/colorPrimary"
+        app:operateEmptyColor="@color/white"
+        app:operateMaxProgress="100"
+        app:operateStrokeColor="@color/white"
+        app:operateStyle="progressStroke" />
 
 </android.support.constraint.ConstraintLayout>

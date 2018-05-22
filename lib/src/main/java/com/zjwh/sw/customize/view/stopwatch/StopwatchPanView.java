@@ -1,4 +1,4 @@
-package com.zjwh.sw.customize.view;
+package com.zjwh.sw.customize.view.stopwatch;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,17 +13,15 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.zjwh.sw.customize.utils.DateUtil;
+import com.zjwh.sw.customize.view.R;
 
 /**
  * create lyl on 2018/5/16
  * </p>
  */
-public class StopwatchView extends View {
+public class StopwatchPanView extends View {
 
     private Paint mPaint;
-    private Paint mPointPaint;
-    private Paint mPointCirclePaint;
-    private Path mPointPath;
 
     // region 控件相关字段
     // mWidth 控件宽度 mHeight 控件高度
@@ -34,8 +32,6 @@ public class StopwatchView extends View {
     private int mMillisecondColor;
     // 刻度文案颜色
     private int mDialTextColor;
-    // 秒钟时长文案颜色
-    private int mTimerTextColor;
     // 5秒刻度长度
     private float mLongLength;
     // 每秒刻度长度
@@ -48,29 +44,19 @@ public class StopwatchView extends View {
     private float mNormalWidth;
     // 刻度文案字体大小
     private float mDialTextSize;
-    // 秒钟时长文案字体大小
-    private float mTimerTextSize;
-    // 指针距离圆心短尾宽度
-    private float mPointEndWidth;
-    // 指针距离圆心短尾长度
-    private float mPointEndLength;
-    // 指针圆形半径
-    private float mPointRadius;
-    // 秒钟时长
-    private long mMillisecond = 0;
     // endregion
 
-    public StopwatchView(Context context) {
+    public StopwatchPanView(Context context) {
         super(context);
         init(null);
     }
 
-    public StopwatchView(Context context, @Nullable AttributeSet attrs) {
+    public StopwatchPanView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public StopwatchView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public StopwatchPanView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -88,11 +74,6 @@ public class StopwatchView extends View {
             mMillisecondColor = a.getColor(R.styleable.StopwatchView_millisecondColor, ContextCompat.getColor(getContext(), R.color.stopwatch_millisecond_color));
             mDialTextColor = a.getColor(R.styleable.StopwatchView_dialTextColor, ContextCompat.getColor(getContext(), R.color.stopwatch_text_color));
             mDialTextSize = a.getDimension(R.styleable.StopwatchView_dialTextSize, dip2px(20));
-            mTimerTextColor = a.getColor(R.styleable.StopwatchView_timerTextColor, ContextCompat.getColor(getContext(), R.color.stopwatch_millisecond_color));
-            mTimerTextSize = a.getDimension(R.styleable.StopwatchView_timerTextSize, dip2px(20));
-            mPointEndWidth = a.getDimension(R.styleable.StopwatchView_pointEndWidth, dip2px(5));
-            mPointEndLength = a.getDimension(R.styleable.StopwatchView_pointEndLength, dip2px(20));
-            mPointRadius = a.getDimension(R.styleable.StopwatchView_pointRadius, dip2px(10));
             a.recycle();
         } else {
             mLongLength = dip2px(10);
@@ -104,22 +85,10 @@ public class StopwatchView extends View {
             mMillisecondColor = ContextCompat.getColor(getContext(), R.color.stopwatch_millisecond_color);
             mDialTextColor = ContextCompat.getColor(getContext(), R.color.stopwatch_text_color);
             mDialTextSize = dip2px(20);
-            mTimerTextColor = ContextCompat.getColor(getContext(), R.color.stopwatch_millisecond_color);
-            mTimerTextSize = dip2px(20);
-            mPointEndWidth = dip2px(5);
-            mPointEndLength = dip2px(20);
-            mPointRadius = dip2px(10);
         }
         // endregion
-        mPointPath = new Path();
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-
-        mPointPaint = new Paint();
-        mPointPaint.setAntiAlias(true);
-
-        mPointCirclePaint = new Paint();
-        mPointCirclePaint.setAntiAlias(true);
     }
 
     @Override
@@ -127,21 +96,6 @@ public class StopwatchView extends View {
         mWidth = measureDimension((int) dip2px(80), widthMeasureSpec);
         mHeight = measureDimension((int) dip2px(80), heightMeasureSpec);
         setMeasuredDimension(mWidth, mHeight);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        float height = mHeight / 2 - (mLongLength + mDialTextSize);
-        LinearGradient shader = new LinearGradient(-mPointEndWidth / 2, height, mPointEndWidth / 2, mHeight / 2,
-                new int[]{ContextCompat.getColor(getContext(), R.color.stopwatch_point_start_color),
-                        ContextCompat.getColor(getContext(), R.color.stopwatch_point_end_color)}, null, Shader.TileMode.MIRROR);
-        mPointPaint.setShader(shader);
-        LinearGradient shader2 = new LinearGradient(mWidth / 2 - mPointRadius, mHeight / 2 - mPointRadius,
-                mWidth / 2 + mPointRadius, mHeight / 2 + mPointRadius,
-                new int[]{ContextCompat.getColor(getContext(), R.color.stopwatch_point_start_color),
-                        ContextCompat.getColor(getContext(), R.color.stopwatch_point_end_color)}, null, Shader.TileMode.MIRROR);
-        mPointCirclePaint.setShader(shader2);
     }
 
     /***
@@ -170,8 +124,6 @@ public class StopwatchView extends View {
         canvas.translate(mWidth / 2, mHeight / 2);
         drawScale(canvas);
         drawScaleText(canvas);
-        drawTimerText(canvas);
-        drawPoint(canvas);
     }
 
     /**
@@ -215,33 +167,6 @@ public class StopwatchView extends View {
         }
     }
 
-    /***
-     * 绘制秒表时长
-     */
-    private void drawTimerText(Canvas canvas) {
-        String timerText = DateUtil.formatDate(mMillisecond, DateUtil.MMSSMM);
-        float textWidth = mPaint.measureText(timerText);
-        mPaint.setColor(mTimerTextColor);
-        mPaint.setTextSize(mTimerTextSize);
-        canvas.drawText(timerText, -textWidth / 2, mHeight / 4, mPaint);
-    }
-
-    /***
-     * 绘制指针
-     */
-    private void drawPoint(Canvas canvas) {
-        canvas.save();
-        canvas.rotate(mMillisecond * 0.006f);
-        float height = mHeight / 2 - (mLongLength + mDialTextSize);
-        mPointPath.moveTo(-mPointEndWidth / 2, mPointEndLength);
-        mPointPath.lineTo(mPointEndWidth / 2, mPointEndLength);
-        mPointPath.lineTo(0, -height);
-        mPointPath.close();
-        canvas.drawPath(mPointPath, mPointPaint);
-        canvas.drawCircle(0, 0, mPointRadius, mPointCirclePaint);
-        canvas.restore();
-    }
-
     private String add0(long number) {
         return number < 10 ? "0" + number : String.valueOf(number);
     }
@@ -249,14 +174,5 @@ public class StopwatchView extends View {
     private float dip2px(float dipValue) {
         final float scale = getContext().getApplicationContext().getResources().getDisplayMetrics().density;
         return dipValue * scale + 0.5f;
-    }
-
-    public void setMillisecond(long millisecond) {
-        this.mMillisecond = millisecond;
-        this.postInvalidate();
-    }
-
-    public long getMillisecond() {
-        return mMillisecond;
     }
 }

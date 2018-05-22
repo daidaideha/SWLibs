@@ -2,7 +2,7 @@ package com.zjwh.sw.customize.utils;
 
 import android.content.Context;
 
-public final class DensityUtil {
+public class DensityUtil {
 
     private static float density = -1F;
     private static int widthPixels = -1;
